@@ -42,17 +42,12 @@ init (document.body);
 useJson (fileJson, 'days', document.body);
 initJournal();
 load();
-createSelection ('personList', selectPeoples, document.getElementsByTagName ('section')[0]);
-createSelection ('placeList', selectPlaces, document.getElementsByTagName ('section')[0]);
-createSelection ('tagList', selectTags, document.getElementsByTagName ('section')[0]);
-createCarousel ('years', selectYears, document.getElementsByTagName ('section')[0]);
 
 function selectYears (year){ yearCurrent = year; }
 function selectPlaces (place){ placeCurrent = place.toLowerCase(); }
 function selectPeoples (person){ personCurent = person.toLowerCase(); }
 function selectTags (tag){ tagCurrent = tag.toLowerCase(); }
 function selectDays(){
-	console.log (placeCurrent, yearCurrent, personCurent, tagCurrent);
 	debbyPlay.days =[];
 	if (yearCurrent == 'tous' && placeCurrent == 'tous' && personCurent == 'tous' && tagCurrent == 'tous')
 		for (var j in allDays) debbyPlay.days.push (allDays[j]);

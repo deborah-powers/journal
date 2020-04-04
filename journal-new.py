@@ -22,8 +22,8 @@ dayDict ={
 form = cgi.FieldStorage()
 if form.getvalue ('date'): dayDict['date'] = form.getvalue ('date').replace ('-', '/')
 if form.getvalue ('place'): dayDict['place'] = form.getvalue ('place')
-if form.getvalue ('persons'): dayDict['personnes'] = form.getvalue ('persons').split (',')
-if form.getvalue ('tags'): dayDict['tags'] = form.getvalue ('tags').split (',')
+if form.getvalue ('persons'): dayDict['personnes'] = form.getvalue ('persons').split (', ')
+if form.getvalue ('tags'): dayDict['tags'] = form.getvalue ('tags').split (', ')
 if form.getvalue ('title'): dayDict['title'] = form.getvalue ('title')
 if form.getvalue ('message'): dayDict['content'] = form.getvalue ('message').split ('\n')
 
@@ -64,9 +64,10 @@ def shapeJson (jsonObj):
 	dayString = dayString.replace ('content": [ "', 'content": [\n\t\t"')
 	dayString = dayString.replace ('" ]}', '"\n\t]\n}')
 	dayString = dayString.replace (']}', ']\n}')
-	dayString = dayString.replace ('}', '}\n')
+	dayString = dayString.replace ('}', '},\n')
 	return dayString
 
 articleList = readFile (jsonName)
-articleList = shapeJson (dayJson) + articleList
+articleList = articleList[1:]
+articleList ='['+ shapeJson (dayJson) + articleList
 writeFile (jsonName, articleList)
