@@ -16,17 +16,20 @@ dayDict ={
 	"place": "",
 	"title": "",
 	"tags": [],
-	"personnes": [],
+	"peoples": [],
 	"content": []
 }
 form = cgi.FieldStorage()
 if form.getvalue ('date'): dayDict['date'] = form.getvalue ('date').replace ('-', '/')
 if form.getvalue ('place'): dayDict['place'] = form.getvalue ('place')
-if form.getvalue ('persons'): dayDict['personnes'] = form.getvalue ('persons').split (', ')
+if form.getvalue ('persons'): dayDict['peoples'] = form.getvalue ('persons').split (', ')
 if form.getvalue ('tags'): dayDict['tags'] = form.getvalue ('tags').split (', ')
 if form.getvalue ('title'): dayDict['title'] = form.getvalue ('title')
 if form.getvalue ('message'): dayDict['content'] = form.getvalue ('message').split ('\n')
 
+dayDict['peoples'].sort()
+dayDict['tags'].sort()
+dayDict['date'] = dayDict['date'].replace ('-','/')
 dayJson = json.dumps (dayDict)
 print (dayJson)
 
@@ -56,7 +59,7 @@ def shapeJson (jsonObj):
 	dayString = dayString.replace ('{"', '{\n\t"')
 	dayString = dayString.replace (', "place', ',\n\t"place')
 	dayString = dayString.replace (', "title', ',\n\t"title')
-	dayString = dayString.replace (', "personnes', ',\n\t"personnes')
+	dayString = dayString.replace (', "peoples', ',\n\t"peoples')
 	dayString = dayString.replace (', "tags', ',\n\t"tags')
 	dayString = dayString.replace (', "content', ',\n\t"content')
 	dayString = dayString.replace ('["', '[ "')

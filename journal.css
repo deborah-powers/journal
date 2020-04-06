@@ -20,6 +20,6 @@ selection {
 }
 selection p { grid-column: 1/4; }
 selection[for='placeList'] p:before { content: 'lieu: '; }
-selection[for='personList'] p:before { content: 'qui: '; }
+selection[for='peopleList'] p:before { content: 'qui: '; }
 selection[for='tagList'] p:before { content: 'tag: '; }
 span::after { content: ': ' }

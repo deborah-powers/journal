@@ -1,14 +1,14 @@
 const fileJson = slice (document.URL, 0,-10) + '.json';
 debbyPlay.tagList =[];
 debbyPlay.placeList =[];
-debbyPlay.personList =[];
+debbyPlay.peopleList =[];
 debbyPlay.years =[ 'tous', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020' ];
 debbyPlay.days =[];
 var allDays =[];
 var yearCurrent = 'tous';
 var placeCurrent = 'tous';
 var tagCurrent = 'tous';
-var personCurent = 'tous';
+var peopleCurent = 'tous';
 
 function initJournal(){
 	for (var d in debbyPlay.days){
@@ -19,18 +19,18 @@ function initJournal(){
 			if (! containsList (debbyPlay.tagList, debbyPlay.days[d].tags[t])){
 				debbyPlay.tagList.push (debbyPlay.days[d].tags[t]);
 		}}
-		for (var t in debbyPlay.days[d].personnes){
-			if (! containsList (debbyPlay.personList, debbyPlay.days[d].personnes[t])){
-				debbyPlay.personList.push (debbyPlay.days[d].personnes[t]);
+		for (var t in debbyPlay.days[d].peoples){
+			if (! containsList (debbyPlay.peopleList, debbyPlay.days[d].peoples[t])){
+				debbyPlay.peopleList.push (debbyPlay.days[d].peoples[t]);
 	}}}
 	debbyPlay.placeList.sort();
 	debbyPlay.placeList.unshift ('tous');
-	debbyPlay.personList.sort();
-	debbyPlay.personList.unshift ('tous');
+	debbyPlay.peopleList.sort();
+	debbyPlay.peopleList.unshift ('tous');
 	debbyPlay.tagList.sort();
 	debbyPlay.tagList.unshift ('tous');
 	console.log ('lieux:', debbyPlay.placeList);
-	console.log ('personnes:', debbyPlay.personList);
+	console.log ('personnes:', debbyPlay.peopleList);
 	console.log ('tags:', debbyPlay.tagList);
 	console.log ('jours:', debbyPlay.days);
 }
@@ -45,56 +45,56 @@ load();
 
 function selectYears (year){ yearCurrent = year; }
 function selectPlaces (place){ placeCurrent = place.toLowerCase(); }
-function selectPeoples (person){ personCurent = person.toLowerCase(); }
+function selectPeoples (people){ peopleCurent = people.toLowerCase(); }
 function selectTags (tag){ tagCurrent = tag.toLowerCase(); }
 function selectDays(){
 	debbyPlay.days =[];
-	if (yearCurrent == 'tous' && placeCurrent == 'tous' && personCurent == 'tous' && tagCurrent == 'tous')
+	if (yearCurrent == 'tous' && placeCurrent == 'tous' && peopleCurent == 'tous' && tagCurrent == 'tous')
 		for (var j in allDays) debbyPlay.days.push (allDays[j]);
 	// sélection sur un seul élément sur les quatre
-	else if (yearCurrent == 'tous' && placeCurrent == 'tous' && personCurent == 'tous'){
+	else if (yearCurrent == 'tous' && placeCurrent == 'tous' && peopleCurent == 'tous'){
 		for (var j in allDays){
 			if (containsList (allDays[j].tags, tagCurrent)) debbyPlay.days.push (allDays[j]);
 	}}
-	else if (yearCurrent == 'tous' && tagCurrent == 'tous' && personCurent == 'tous'){
+	else if (yearCurrent == 'tous' && tagCurrent == 'tous' && peopleCurent == 'tous'){
 		for (var j in allDays){
 			if (allDays[j].place == placeCurrent) debbyPlay.days.push (allDays[j]);
 	}}
-	else if (placeCurrent == 'tous' && tagCurrent == 'tous' && personCurent == 'tous'){
+	else if (placeCurrent == 'tous' && tagCurrent == 'tous' && peopleCurent == 'tous'){
 		for (var j in allDays){
 			if (containsText (allDays[j].date, yearCurrent +'/')) debbyPlay.days.push (allDays[j]);
 	}}
 	else if (yearCurrent == 'tous' && placeCurrent == 'tous' && tagCurrent == 'tous'){
 		for (var j in allDays){
-			if (containsList (allDays[j].personnes, personCurent)) debbyPlay.days.push (allDays[j]);
+			if (containsList (allDays[j].peoples, peopleCurent)) debbyPlay.days.push (allDays[j]);
 	}}
 	// sélection sur deux éléments
 	else if (yearCurrent == 'tous' && placeCurrent == 'tous'){
 		for (var j in allDays){
-			if (containsList (allDays[j].tags, tagCurrent) && containsList (allDays[j].personnes, personCurent))
+			if (containsList (allDays[j].tags, tagCurrent) && containsList (allDays[j].peoples, peopleCurent))
 				debbyPlay.days.push (allDays[j]);
 	}}
 	else if (yearCurrent == 'tous' && tagCurrent == 'tous'){
 		for (var j in allDays){
-			if (allDays[j].place == placeCurrent && containsList (allDays[j].personnes, personCurent))
+			if (allDays[j].place == placeCurrent && containsList (allDays[j].peoples, peopleCurent))
 				debbyPlay.days.push (allDays[j]);
 	}}
-	else if (yearCurrent == 'tous' && personCurent == 'tous'){
+	else if (yearCurrent == 'tous' && peopleCurent == 'tous'){
 		for (var j in allDays){
 			if (allDays[j].place == placeCurrent && containsList (allDays[j].tags, tagCurrent))
 				debbyPlay.days.push (allDays[j]);
 	}}
 	else if (tagCurrent == 'tous' && placeCurrent == 'tous'){
 		for (var j in allDays){
-			if (containsText (allDays[j].date, yearCurrent +'/') && containsList (allDays[j].personnes, personCurent))
+			if (containsText (allDays[j].date, yearCurrent +'/') && containsList (allDays[j].peoples, peopleCurent))
 				debbyPlay.days.push (allDays[j]);
 	}}
-	else if (tagCurrent == 'tous' && personCurent == 'tous'){
+	else if (tagCurrent == 'tous' && peopleCurent == 'tous'){
 		for (var j in allDays){
 			if (containsText (allDays[j].date, yearCurrent +'/') && allDays[j].place == placeCurrent)
 				debbyPlay.days.push (allDays[j]);
 	}}
-	else if (placeCurrent == 'tous' && personCurent == 'tous'){
+	else if (placeCurrent == 'tous' && peopleCurent == 'tous'){
 		for (var j in allDays){
 			if (containsText (allDays[j].date, yearCurrent +'/') && containsList (allDays[j].tags, tagCurrent))
 				debbyPlay.days.push (allDays[j]);
@@ -103,27 +103,27 @@ function selectDays(){
 	else if (placeCurrent == 'tous'){
 		for (var j in allDays){
 			if (containsText (allDays[j].date, yearCurrent +'/') && containsList (allDays[j].tags, tagCurrent)
-				&& containsList (allDays[j].personnes, personCurent)) debbyPlay.days.push (allDays[j]);
+				&& containsList (allDays[j].peoples, peopleCurent)) debbyPlay.days.push (allDays[j]);
 	}}
 	else if (yearCurrent == 'tous'){
 		for (var j in allDays){
 			if (allDays[j].place == placeCurrent && containsList (allDays[j].tags, tagCurrent)
-				&& containsList (allDays[j].personnes, personCurent)) debbyPlay.days.push (allDays[j]);
+				&& containsList (allDays[j].peoples, peopleCurent)) debbyPlay.days.push (allDays[j]);
 	}}
-	else if (personCurent == 'tous'){
+	else if (peopleCurent == 'tous'){
 		for (var j in allDays){
 			if (containsText (allDays[j].date, yearCurrent +'/') && containsList (allDays[j].tags, tagCurrent)
 				&& allDays[j].place == placeCurrent) debbyPlay.days.push (allDays[j]);
 	}}
 	else if (tagCurrent == 'tous'){
 		for (var j in allDays){
-			if (containsText (allDays[j].date, yearCurrent +'/') && containsList (allDays[j].personnes, personCurent)
+			if (containsText (allDays[j].date, yearCurrent +'/') && containsList (allDays[j].peoples, peopleCurent)
 				&& allDays[j].place == placeCurrent) debbyPlay.days.push (allDays[j]);
 	}}
 	// sélection sur tous les éléments
 	else{
 		for (var j in allDays){
-			if (containsText (allDays[j].date, yearCurrent +'/') && allDays[j].place == placeCurrent && containsList (allDays[j].tags, tagCurrent) && containsList (allDays[j].personnes, personCurent)) debbyPlay.days.push (allDays[j]);
+			if (containsText (allDays[j].date, yearCurrent +'/') && allDays[j].place == placeCurrent && containsList (allDays[j].tags, tagCurrent) && containsList (allDays[j].peoples, peopleCurent)) debbyPlay.days.push (allDays[j]);
 	}}
 	var containerDays = document.getElementsByTagName ('section')[1];
 	load (containerDays);

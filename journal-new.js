@@ -3,7 +3,7 @@ const urlBase = 'http://localhost:1407/cgi-bin/journal/journal-new.py';
 
 debbyPlay.tagList =[];
 debbyPlay.placeList =[];
-debbyPlay.personList =[];
+debbyPlay.peopleList =[];
 debbyPlay.days =[];
 
 function initJournal(){
@@ -14,15 +14,15 @@ function initJournal(){
 			if (! containsList (debbyPlay.tagList, debbyPlay.days[d].tags[t]))
 				debbyPlay.tagList.push (debbyPlay.days[d].tags[t]);
 		}
-		for (var t in debbyPlay.days[d].personnes){
-			if (! containsList (debbyPlay.personList, debbyPlay.days[d].personnes[t]))
-				debbyPlay.personList.push (debbyPlay.days[d].personnes[t]);
+		for (var t in debbyPlay.days[d].peoples){
+			if (! containsList (debbyPlay.peopleList, debbyPlay.days[d].peoples[t]))
+				debbyPlay.peopleList.push (debbyPlay.days[d].peoples[t]);
 	}}
 	debbyPlay.placeList.sort();
-	debbyPlay.personList.sort();
+	debbyPlay.peopleList.sort();
 	debbyPlay.tagList.sort();
 	debbyPlay.placeCurrent ="";
-	debbyPlay.personsCurrent ="";
+	debbyPlay.peoplesCurrent ="";
 	debbyPlay.tagsCurrent ="";
 }
 function register(){
@@ -32,7 +32,7 @@ function register(){
 	}
 	else{
 		var params = '?place=' + document.getElementById ('place').value + '&date=' + document.getElementById ('date').value
-			+ '&persons=' + document.getElementById ('persons').value + '&tags=' + document.getElementById ('tags').value
+			+ '&peoples=' + document.getElementById ('peoples').value + '&tags=' + document.getElementById ('tags').value
 			+ '&title=' + document.getElementById ('title').value + '&message=' + document.getElementById ('message').value;
 		var url = urlBase + params;
 		var xhttp = new XMLHttpRequest();
@@ -57,10 +57,10 @@ function selectPlace (place){
 	debbyPlay.placeCurrent = place.toLowerCase();
 	load (document.getElementById ('place'));
 }
-function selectPeoples (person){
-	debbyPlay.personsCurrent = debbyPlay.personsCurrent +', '+ person.toLowerCase();
-	if (slice (debbyPlay.personsCurrent, 0,2) ==', ') debbyPlay.personsCurrent = slice (debbyPlay.personsCurrent, 2);
-	load (document.getElementById ('persons'));
+function selectPeoples (people){
+	debbyPlay.peoplesCurrent = debbyPlay.peoplesCurrent +', '+ people.toLowerCase();
+	if (slice (debbyPlay.peoplesCurrent, 0,2) ==', ') debbyPlay.peoplesCurrent = slice (debbyPlay.peoplesCurrent, 2);
+	load (document.getElementById ('peoples'));
 }
 function selectTags (tag){
 	debbyPlay.tagsCurrent = debbyPlay.tagsCurrent +', '+ tag.toLowerCase();
